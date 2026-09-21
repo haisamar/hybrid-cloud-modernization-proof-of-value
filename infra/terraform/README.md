@@ -25,7 +25,7 @@ terraform validate
 credentials. They were **not** executed unless `docs/implementation-status.md`
 records otherwise. Never invent plan/apply output.
 
-Initial workstation implementation recorded Terraform as **IMPLEMENTED**
-and runtime validation as **NOT EXECUTED** when the `terraform` binary was
-absent. A later successful GitHub Actions run may update that status only
-after the workflow is actually observed.
+GitHub Actions workflow **validate #2** on commit `518e3d0` ran
+`terraform fmt -check`, `terraform init -backend=false`, and
+`terraform validate`. That is **TESTED IN CI**. It is not `terraform plan`
+or `terraform apply`. See `docs/implementation-status.md`.

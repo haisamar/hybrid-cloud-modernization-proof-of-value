@@ -34,16 +34,16 @@ See [`docs/implementation-status.md`](docs/implementation-status.md).
 
 Labels used: **IMPLEMENTED**, **TESTED**, **ARCHITECTED**, **NOT EXECUTED**.
 
-Intended runtime is **Python 3.12** (`.python-version`, GitHub Actions, container base image). Local pytest on this workstation used **Python 3.14.7**. That is not Python 3.12 CI evidence.
+Intended runtime is **Python 3.12** (`.python-version`, GitHub Actions, container base image). Local pytest on this workstation used **Python 3.14.7**. Python **3.12 application tests** are **TESTED IN CI** (GitHub Actions `validate` #2 on commit `518e3d0`).
 
-Workstation detection for the initial implementation:
+Workstation detection for the initial implementation (local binaries):
 
 - Python — present (3.14.7 locally)
-- Docker / Podman — absent → Dockerfile IMPLEMENTED, image **NOT EXECUTED**
-- Terraform — absent → configuration IMPLEMENTED, validate **NOT EXECUTED**
+- Docker / Podman — absent locally
+- Terraform — absent locally
 - oc / kubectl — absent → manifests IMPLEMENTED, deploy **NOT EXECUTED**
 
-GitHub Actions is configured to run tests on Python 3.12, Terraform validate, and a Docker build. Those items stay **NOT EXECUTED** in `docs/implementation-status.md` until a successful workflow run is observed. The workflow does not plan/apply Terraform, talk to a cluster, or deploy.
+Observed CI (`validate` #2, commit `518e3d0`): Python 3.12 tests, `docker build`, and `terraform fmt -check` / `init -backend=false` / `validate` are **TESTED IN CI**. A Docker **image build** is not a container deployed to OpenShift. Terraform fmt/init/validate is not `terraform plan` or `terraform apply`. The workflow still does not talk to a cluster or deploy.
 
 ### Persistence
 

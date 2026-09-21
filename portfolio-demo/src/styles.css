@@ -581,6 +581,11 @@ tbody tr:hover {
   color: #0e6027;
 }
 
+.badge-tested-in-ci {
+  background: #9ef0f0;
+  color: #005d5d;
+}
+
 .badge-implemented {
   background: #d0e2ff;
   color: #002d9c;

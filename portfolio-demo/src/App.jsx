@@ -149,7 +149,7 @@ export default function App() {
             <h3>Docker</h3>
             <p>Packs the app and what it needs into one consistent package.</p>
             <p><strong>Why it helps:</strong> The same package can be used in different places.</p>
-            <p className="technical-line">Dockerfile implemented. Image build status is shown in Validation Status.</p>
+            <p className="technical-line">Dockerfile implemented. GitHub Actions tested the image BUILD. That is not an OpenShift deployment.</p>
           </article>
           <article>
             <span className="tech-icon openshift-icon" aria-hidden="true">O</span>
@@ -163,7 +163,7 @@ export default function App() {
             <h3>Terraform</h3>
             <p>Writes the environment setup as code.</p>
             <p><strong>Why it helps:</strong> The setup can be reviewed and recreated instead of remembered.</p>
-            <p className="technical-line">Kubernetes provider, namespace, resource quota, configuration, and service account definitions.</p>
+            <p className="technical-line">GitHub Actions tested terraform fmt, init, and validate. That is not terraform plan or apply.</p>
           </article>
         </div>
       </section>
@@ -252,6 +252,7 @@ export default function App() {
         <div className="status-key">
           <div><Badge value="IMPLEMENTED" /><span>The code or configuration exists.</span></div>
           <div><Badge value="TESTED" /><span>I actually ran a test or validation for it.</span></div>
+          <div><Badge value="TESTED IN CI" /><span>GitHub Actions ran the check. A Docker image build is not an OpenShift deploy. Terraform validate is not plan or apply.</span></div>
           <div><Badge value="ARCHITECTED" /><span>The design is documented, but the real runtime was not built or connected.</span></div>
           <div><Badge value="NOT EXECUTED" /><span>The artifact may exist, but I have not run it in that environment.</span></div>
         </div>
