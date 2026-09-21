@@ -13,10 +13,10 @@ resource "kubernetes_config_map_v1" "platform" {
   }
 
   data = {
-    PLATFORM                 = "openshift-compatible"
-    PERSISTENCE_MODE         = "sqlite-pov"
-    REPLICAS_POLICY          = "1"
-    DATABASE_MODERNIZATION   = "out-of-scope"
+    PLATFORM               = "openshift-compatible"
+    PERSISTENCE_MODE       = "sqlite-pov"
+    REPLICAS_POLICY        = "1"
+    DATABASE_MODERNIZATION = "out-of-scope"
   }
 }
 
