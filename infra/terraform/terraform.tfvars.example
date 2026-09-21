@@ -1,0 +1,9 @@
+# Copy to terraform.tfvars locally. Do not commit terraform.tfvars.
+namespace          = "order-intake-pov"
+kubeconfig_path    = ""
+kubeconfig_context = ""
+kubernetes_host    = "https://api.cluster.example.invalid:6443"
+kubernetes_token   = ""
+kubernetes_insecure = false
+quota_cpu          = "2"
+quota_memory       = "4Gi"

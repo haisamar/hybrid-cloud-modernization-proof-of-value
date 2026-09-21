@@ -1,0 +1,15 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: order-intake
+  namespace: order-intake-pov
+  labels:
+    app.kubernetes.io/name: order-intake
+spec:
+  to:
+    kind: Service
+    name: order-intake
+    weight: 100
+  port:
+    targetPort: http
+  wildcardPolicy: None

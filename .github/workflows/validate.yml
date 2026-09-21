@@ -1,0 +1,56 @@
+name: validate
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install legacy-app dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r legacy-app/requirements.txt
+
+      - name: Run legacy-app tests
+        run: python -m pytest legacy-app/tests -q
+
+      - name: Install modernized-app dependencies
+        run: pip install -r modernized-app/requirements.txt
+
+      - name: Run modernized-app tests
+        run: python -m pytest modernized-app/tests -q
+
+      - name: Run infrastructure artifact tests
+        run: python -m pytest tests -q
+
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: "1.9.8"
+          terraform_wrapper: false
+
+      - name: Terraform fmt -check
+        working-directory: infra/terraform
+        run: terraform fmt -check
+
+      - name: Terraform init (no backend)
+        working-directory: infra/terraform
+        run: terraform init -backend=false
+
+      - name: Terraform validate
+        working-directory: infra/terraform
+        run: terraform validate
+
+      - name: Docker build modernized-app
+        working-directory: modernized-app
+        run: docker build -t order-intake:pov .

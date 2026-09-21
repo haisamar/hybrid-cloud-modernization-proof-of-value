@@ -1,0 +1,22 @@
+{
+  "note": "Statuses reflect workstation commands actually run. Planned CI does not upgrade TESTED until a successful workflow is observed.",
+  "items": [
+    { "name": "Legacy application", "status": "TESTED" },
+    { "name": "Modernized application", "status": "TESTED" },
+    { "name": "Application tests", "status": "TESTED" },
+    { "name": "SQLite persistence", "status": "TESTED" },
+    { "name": "DATABASE_URL abstraction", "status": "TESTED" },
+    { "name": "PostgreSQL-ready architecture", "status": "ARCHITECTED" },
+    { "name": "PostgreSQL runtime", "status": "NOT EXECUTED" },
+    { "name": "Dockerfile", "status": "IMPLEMENTED" },
+    { "name": "Docker image", "status": "NOT EXECUTED" },
+    { "name": "OpenShift manifests", "status": "TESTED" },
+    { "name": "OpenShift deployment", "status": "NOT EXECUTED" },
+    { "name": "Terraform configuration", "status": "IMPLEMENTED" },
+    { "name": "Terraform validation", "status": "NOT EXECUTED" },
+    { "name": "Hybrid architecture", "status": "ARCHITECTED" },
+    { "name": "IBM Cloud deployment", "status": "NOT EXECUTED" },
+    { "name": "Public portfolio demo", "status": "TESTED" },
+    { "name": "GitHub Actions run", "status": "NOT EXECUTED" }
+  ]
+}

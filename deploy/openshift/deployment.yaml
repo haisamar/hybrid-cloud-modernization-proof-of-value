@@ -1,0 +1,76 @@
+# SQLite / emptyDir is PoV-only and is not highly available.
+# replicas MUST remain 1 for this persistence path.
+# Pod replacement may lose ephemeral data.
+# Horizontal scaling requires external shared persistence.
+# Production database modernization is outside this PoV.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: order-intake
+  namespace: order-intake-pov
+  labels:
+    app.kubernetes.io/name: order-intake
+spec:
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 0
+      maxSurge: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: order-intake
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: order-intake
+    spec:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 10001
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: order-intake
+          image: order-intake:pov
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 8080
+          envFrom:
+            - configMapRef:
+                name: order-intake-config
+            - secretRef:
+                name: order-intake-secrets
+          readinessProbe:
+            httpGet:
+              path: /ready
+              port: http
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: http
+            initialDelaySeconds: 10
+            periodSeconds: 20
+          resources:
+            requests:
+              cpu: 50m
+              memory: 128Mi
+            limits:
+              cpu: 250m
+              memory: 256Mi
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: false
+            runAsNonRoot: true
+            capabilities:
+              drop:
+                - ALL
+          volumeMounts:
+            - name: sqlite-data
+              mountPath: /app/data
+      volumes:
+        - name: sqlite-data
+          emptyDir: {}

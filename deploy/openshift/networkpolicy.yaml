@@ -1,0 +1,28 @@
+# EXAMPLE BASELINE ONLY.
+# OpenShift ingress router namespaces, labels, and NetworkPolicy selectors
+# are cluster-specific. Validate these selectors against the customer
+# platform before apply. Do not treat this file as universally correct.
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: order-intake-ingress
+  namespace: order-intake-pov
+  labels:
+    app.kubernetes.io/name: order-intake
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/name: order-intake
+  policyTypes:
+    - Ingress
+  ingress:
+    - from:
+        # EXAMPLE: same-namespace traffic. Confirm if this matches the customer cluster.
+        - podSelector: {}
+        # EXAMPLE: common OpenShift ingress namespace name. MUST VALIDATE on the actual cluster.
+        - namespaceSelector:
+            matchLabels:
+              network.openshift.io/policy-group: ingress
+      ports:
+        - protocol: TCP
+          port: 8080
